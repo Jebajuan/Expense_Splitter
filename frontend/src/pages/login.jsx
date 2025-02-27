@@ -6,7 +6,7 @@ function login() {
   return (
     <div >
         <div className='form-container'>
-            <h2>Login</h2>
+            <h2 className='login-center'>Login</h2>
             <form >
                 <label htmlFor="userName"></label>
                 <input type="text" className='space' id='userName' placeholder='Username' required />
