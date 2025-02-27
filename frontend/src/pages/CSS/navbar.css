@@ -1,29 +1,68 @@
-nav{
-    display: flex;
-    list-style-type: none;
+nav {
     background-color: black;
+    padding: 10px 0;
+}
+
+ul {
+    display: flex;
     justify-content: space-evenly;
-    padding:10px;
-    margin-top: -10px;
-    margin-left: -10px;
-    margin-right: -10px;
-}
-nav li{
-    padding: 10px;
-    border-radius:10px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-nav a{
-    text-decoration: none;
+.link a {
     color: white;
+    text-decoration: none;
 }
 
-nav li:hover{
-    background-color: white;
-    transition: background-color 0.4s ease-in-out;
+.link {
+    color: white;
+    padding: 15px;
+    display: inline-block;
 }
 
-nav li:hover a{
-    color: black;
-    transition: color 0.4s ease;
+.dropdown {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.link:hover, .setting:hover {
+    background-color: grey;
+    border-radius: 13px;
+}
+
+.dropdown-list {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: black;
+    list-style-type: none;
+    padding: 5px;
+    border-radius: 12px;
+    width: max-content;
+}
+
+.dropdown:hover .dropdown-list {
+    display: block;
+    
+}
+
+
+.dropdown-link {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    display: block; 
+}
+
+.dropdown-link:hover{
+    background-color: gray;
+    border-radius: 12px;
+}
+.icon{
+    height: 30px;
+    width: 30px;
 }
