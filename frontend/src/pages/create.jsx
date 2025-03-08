@@ -1,5 +1,7 @@
 import React from 'react'
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function create() {
     const [groupName,setGN] =useState("")
@@ -7,7 +9,7 @@ function create() {
     const [memName,setMN]=useState("")
     const [amount,setAmount]=useState("")
     const [selectedFriends,setSelectedFriends]=useState([])
-
+    const navigate=useNavigate()
     const addFriend = () => {
         if (memName.trim() !== "" && amount.trim() !== "") {
           const newFriend = {
@@ -25,12 +27,20 @@ function create() {
         setSelectedFriends(updatedFriends)
     }
 
-    const handleSubmit = (e) => {
+    const handleCreate = async (e) => {
         e.preventDefault();
-        console.log("Group Name:", groupName);
-        console.log("Group Description:", grpDesc);
-        console.log("Selected Friends:", selectedFriends);
-        
+        const req=await axios.put("http://localhost:3001/create",{
+            groupName:groupName,
+            description:grpDesc,
+            members:selectedFriends
+        })
+        const message=req.data.message
+        const isCreate=req.data.isCreate
+        if(!isCreate){
+            alert(message)
+        }else{
+            navigate("/dashboard")
+        }
       };
     
     
@@ -39,7 +49,7 @@ function create() {
     <div>
         <div>
             <h2>Create Group</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleCreate}>
                 <div>
                     <label>Group Name</label>
                     <input type="text" value={groupName} onChange={(e)=>setGN(e.target.value)} required/>
@@ -50,15 +60,15 @@ function create() {
                 </div>
                 <div>
                     <h2>Add Friends</h2>
-                    <input type="text" placeholder="Enter friend's name" value={memName} onChange={(e)=>setMN(e.target.value)} required/>
-                    <input type="number" placeholder='Enter amount' value={amount} onChange={(e)=>setAmount(e.target.value)} required/>
+                    <input type="text" placeholder="Enter friend's name" value={memName} onChange={(e)=>setMN(e.target.value)} />
+                    <input type="number" placeholder='Enter amount' value={amount} onChange={(e)=>setAmount(e.target.value)} />
                     <button type='button' onClick={addFriend}>Add Friend</button>
 
                     <h3>Selected Friends</h3>
                     <ol>
                         {selectedFriends.map((friend,index)=>(
                             <li key={index}>
-                                {friend.name}-${friend.amount.toFixed(2)}
+                                {friend.name}-₹ {friend.amount.toFixed(2)}
                                 <button type='button' onClick={()=>removeFriend(index)}>Remove</button>
                             </li>
                         ))}

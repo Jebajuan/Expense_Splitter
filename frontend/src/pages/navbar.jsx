@@ -12,6 +12,8 @@ const Navbar=()=>{
                 <ul>
                     <li className='link'><Link to='/'>Home</Link></li>
                     <li className='link'><Link to='/create'>Create Group</Link></li>
+                    <li className='link'><Link to='/update'>Update Group</Link></li>
+                    <li className='link'><Link to='/dashboard'>Dashboard</Link></li>
                     <div className='dropdown' onMouseEnter={()=>setDropdown(true)} onMouseLeave={()=>setDropdown(false)}>
                         <img src={Setting} className='icon' alt="profile" />
                         {dropdown && (

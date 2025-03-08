@@ -1,23 +1,42 @@
 import React from 'react'
-import "./CSS/login.css"
 import {Link} from 'react-router-dom'
+import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
 
 function login() {
+  const [userName,setUN]=useState("")
+  const [password,setPassword]=useState("")
+  const navigate=useNavigate()
+  const handleLogin = async (e) =>{
+    e.preventDefault()
+    const req=await axios.post("http://localhost:3001/login",{
+      userName:userName,
+      password:password
+    })
+    const message=req.data.message
+    const isLogin=req.data.isLogin
+    if(isLogin){
+      navigate("/dashboard")
+    }else{
+      alert(message)
+    }
+  }
   return (
     <div >
-        <div className='form-container'>
-            <h2 className='login-center'>Login</h2>
-            <form >
-                <label htmlFor="userName"></label>
-                <input type="text" className='space' id='userName' placeholder='Username' required />
-                <br />
-                <label htmlFor="password"></label>
-                <input type="password" className='space' id='password' placeholder='Password' required />
-                <br />
-                <button className='space' type='submit'>Login</button>
-            </form>
-            <p>Don't have  an account? <Link to='/signup' className='already'>Signup</Link></p>
+      <h1>Login</h1>
+      <form onSubmit={handleLogin}>
+        <div>
+          <label >Enter Username: </label>
+          <input type="text" value={userName} onChange={(e)=>setUN(e.target.value)} required/>
         </div>
+        <div>
+          <label> Enter Password: </label>
+          <input type="text" value={password} onChange={(e)=>setPassword(e.target.value)} required/>
+        </div>
+        <button type='submit'>Login</button>
+      </form>
     </div>
   )
 }
